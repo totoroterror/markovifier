@@ -17,12 +17,13 @@ class GroupData:
         if self.model is None:
             return None
 
-        message: str = self.model.make_sentence( # type: ignore
+        message: str | None = self.model.make_sentence( # type: ignore
             tries=25000,
             max_overlap_total=config.MAX_OVERLAP_TOTAL, max_overlap_ratio=config.MAX_OVERLAP_RATIO
         )
 
-        logger.debug('Generated message: {message}', message=message)
+        if message is None:
+            logger.debug('Generated message: {message}', message=message)
 
         return message
 

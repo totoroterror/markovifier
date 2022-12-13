@@ -108,6 +108,7 @@ async def stats(message: Message) -> None:
 
 @router.message(
     ChatTypeFilter(chat_type=['supergroup', 'group']),
+
 )
 async def fallback(message: Message) -> None:
     if message.text is None:
@@ -121,7 +122,6 @@ async def fallback(message: Message) -> None:
         messages = [message.decode('utf-8') for message in messages]
 
         groups[message.chat.id] = GroupData(message.chat.id, messages)
-
 
     groups[message.chat.id].add_message(message.text)
 
@@ -154,7 +154,12 @@ async def my_chat_member(event: ChatMemberUpdated) -> None:
     This handler will be called when bot's chat member status is changed.
     """
 
-    logger.debug("{} {} {}", event.chat.id, event.old_chat_member.status, event.new_chat_member.status)
+    logger.debug(
+        'Bot\'s chat members status has changed in {chat_id}: {old_status} -> {new_status}',
+        chat_id=event.chat.id,
+        old_status=event.old_chat_member.status,
+        new_status=event.new_chat_member.status
+    )
 
     match event.new_chat_member.status:
         case 'administrator':
