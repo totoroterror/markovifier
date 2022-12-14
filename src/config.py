@@ -3,7 +3,7 @@ from pydantic import BaseSettings, Field, RedisDsn
 
 class Config(BaseSettings):
     BOT_TOKEN: str = Field(..., env='BOT_TOKEN')
-    REDIS_DSN: RedisDsn = Field(..., env='REDIS_DSN')
+    REDIS_DSN: RedisDsn = Field(default='redis://127.0.0.1:6379/',env='REDIS_DSN')
     MAX_OVERLAP_RATIO: float = Field(default=0.85, env='MAX_OVERLAP_RATIO')
     MAX_OVERLAP_TOTAL: int = Field(default=20, env='MAX_OVERLAP_TOTAL')
     MESSAGE_CHANCE: int = Field(default=10, env='MESSAGE_CHANCE')
